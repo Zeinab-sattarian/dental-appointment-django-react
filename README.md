@@ -61,6 +61,9 @@ To get a local copy up and running follow these simple example steps.
 
 This is an example of how to list things you need to use the software and how to install them.
 
+
+## Frontend Prerequisites
+
 * cd
   ```sh
   cd frontend
@@ -76,7 +79,7 @@ This is an example of how to list things you need to use the software and how to
   yarn dev
   ```
 
----------------------------------------
+## Backend Prerequisites
 
 * cd
   ```sh
@@ -85,7 +88,7 @@ This is an example of how to list things you need to use the software and how to
 
 * venv
   ```sh
-  python venv venv
+  python3 -m venv venv
   ```
 
 * activate
@@ -95,7 +98,7 @@ This is an example of how to list things you need to use the software and how to
 
 * pip
   ```sh
-  pip install -r requirements.txt
+  pip3 install -r requirements.txt
 
   ```
 
