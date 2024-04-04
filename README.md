@@ -4,7 +4,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <img src="frontend/src/assets/images/dentist.png" alt="Logo" width="80" height="80">
+  <img src="frontend/src/assets/images/dentist.png" alt="Logo" width="1000" height="750">
 
   <h3 align="center">Dentist Appointment Project</h3>
 </div>
@@ -75,7 +75,7 @@ This is an example of how to list things you need to use the software and how to
   ```sh
   yarn dev
   ```
-  
+
 ---------------------------------------
 
 * cd
@@ -105,22 +105,10 @@ This is an example of how to list things you need to use the software and how to
 
   ```
 
-### Installation
-
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
-
-1. Install NPM packages
-   ```sh
-   yarn install
-   ```
-
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
-[Django]: https://www.djangoproject.com/m/img/logos/django-logo-negative.png
+[Django]: https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=green
 [Django-url]: https://www.djangoproject.com/
