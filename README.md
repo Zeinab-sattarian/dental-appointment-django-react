@@ -4,7 +4,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <img src="frontend/src/assets/images/dentist.png" alt="Logo" width="1000" height="500">
+  <img src="frontend/src/assets/images/dentist.png" alt="Logo" width="1000" height="400">
 
   <h3 align="center">Dentist Appointment Project</h3>
 </div>
@@ -104,7 +104,7 @@ This is an example of how to list things you need to use the software and how to
 
 * run
   ```sh
-  python manage.py runserver
+  python3 manage.py runserver
 
   ```
 
