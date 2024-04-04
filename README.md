@@ -4,7 +4,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <img src="frontend/src/assets/images/dentist.png" alt="Logo" width="1000" height="750">
+  <img src="frontend/src/assets/images/dentist.png" alt="Logo" width="1000" height="500">
 
   <h3 align="center">Dentist Appointment Project</h3>
 </div>
