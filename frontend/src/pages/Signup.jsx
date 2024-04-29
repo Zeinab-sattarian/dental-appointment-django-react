@@ -1,34 +1,22 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import signupImg from "../assets/images/signup.gif";
-import avatar from "../assets/images/patient-avatar.png";
 import { Link } from "react-router-dom";
 
 const Signup = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [previewURL, setPreviewURL] = useState("");
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
+    userName: "",
     password: "",
-    photo: selectedFile,
     gender: "",
     role: "patient",
   });
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const handleFileInputChange = async (event) => {
-    const file = event.target.files[0];
-
-    //develop backend later
-  };
-
 
   const submitHandler = async event =>{
     event.preventDefault()
   }
-
-
 
   return (
     <section className="px-5 xl:px-0">
@@ -65,10 +53,10 @@ const Signup = () => {
               </div>
               <div className="mb-5">
                 <input
-                  type="email"
-                  placeholder="Enter Your email"
+                  type="text"
+                  placeholder="Enter Your user name"
                   name="email"
-                  value={formData.email}
+                  value={formData.userName}
                   onChange={handleInputChange}
                   className="w-full pr-4 py-3 border-b border-solid 
               border-[#4CCD99] focus:outline-none 
@@ -108,53 +96,6 @@ const Signup = () => {
                     <option value="doctor">Doctor</option>
                   </select>
                 </label>
-                <label className="text-textColor font-bold text-[16px] leading-7">
-                  Gender:
-                  <select
-                    name="gender"
-                    value={formData.gender}
-                    onChange={handleInputChange}
-                    className="text-textColor font-semibold text-[15px] 
-                    leading-7 px-4 py-3 focus:outline-none"
-                  >
-                    <option value="">Select</option>
-                    <option value="female">Female</option>
-                    <option value="male">Male</option>
-                    <option value="other">Other</option>
-                  </select>
-                </label>
-              </div>
-
-              <div className="mb-5 flex items-center gap-3">
-                <figure
-                  className="w-[60px] h-[60px] rounded-full 
-                border-2 border-solid border-primaryColor 
-                flex items-center justify-center"
-                >
-                  <img src={avatar} alt="" className="w-full rounded-full" />
-                </figure>
-
-                <div className="relative w-[130px] h-[50px]">
-                  <input
-                    type="file"
-                    name="photo"
-                    id="customFile"
-                    onChange={handleFileInputChange}
-                    accept=".jpg, .png"
-                    className=" absolute top-0 left-0 w-full h-full 
-                    opacity-0 cursor-pointer"
-                  />
-
-                  <label
-                    htmlFor="customFile"
-                    className="absolute top-0 left-0 w-full h-full flex 
-                    items-center px-[0.75rem] py-[0.375rem] text-[15px] 
-                    leading-6 overflow-hidden bg-[#4CCD99] text-headingColor 
-                    font-semibold rounded-lg truncate cursor-pointer"
-                  >
-                    Upload Photo
-                  </label>
-                </div>
               </div>
 
               <div className="mt-7">

@@ -10,7 +10,6 @@ class User(AbstractUser):
     )
     user_type = models.CharField(max_length=10, choices=USER_TYPE_CHOICES, default='regular')
     name = models.CharField(max_length=255)
-    cellphone = models.CharField(max_length=20)
     # The username and password fields come from AbstractUser.
 
 
