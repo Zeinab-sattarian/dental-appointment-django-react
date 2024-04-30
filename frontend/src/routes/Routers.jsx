@@ -1,4 +1,3 @@
-import React from "react";
 import Home from "../pages/Home";
 import Services from "../pages/Services";
 import Login from "../pages/Login";
@@ -8,12 +7,13 @@ import Doctors from "../pages/Doctors/Doctors";
 import DoctorDetails from "../pages/Doctors/DoctorDetails";
 
 import {Routes, Route} from 'react-router-dom'
+import ProtectedRoute from "./ProtectedRoutes";
 
 const Routers = () => {
   return(
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/home" element={<Home />} />
+      <Route path="/home" element={<ProtectedRoute role="doctor"><Home /></ProtectedRoute>} />
       <Route path="/doctors" element={<Doctors />} />
       <Route path="/doctors/:id" element={<DoctorDetails />} />
       <Route path="/login" element={<Login />} />

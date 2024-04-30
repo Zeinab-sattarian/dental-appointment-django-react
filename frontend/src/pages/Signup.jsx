@@ -1,21 +1,42 @@
 import { useState } from "react";
 import signupImg from "../assets/images/signup.gif";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useMutation } from 'react-query';
+
 
 const Signup = () => {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     name: "",
-    userName: "",
+    username: "",
     password: "",
-    gender: "",
-    role: "patient",
+    user_type: "regular",
   });
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const mutateUser = useMutation(
+    ['posts'],
+    (newUser) => {
+      return fetch('http://127.0.0.1:8000/main/api/signup/', {
+        method: 'POST',
+        body: JSON.stringify(newUser),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      }).then((response) => response.json())
+    }
+  )
+
   const submitHandler = async event =>{
     event.preventDefault()
+    try {
+      await mutateUser.mutateAsync(formData)
+      navigate('/login')
+    } catch(e){
+      console.log(e.message)
+    }
   }
 
   return (
@@ -55,8 +76,8 @@ const Signup = () => {
                 <input
                   type="text"
                   placeholder="Enter Your user name"
-                  name="email"
-                  value={formData.userName}
+                  name="username"
+                  value={formData.username}
                   onChange={handleInputChange}
                   className="w-full pr-4 py-3 border-b border-solid 
               border-[#4CCD99] focus:outline-none 
@@ -86,13 +107,13 @@ const Signup = () => {
                 <label className="text-headingColor font-bold text-[16px] leading-7">
                   Are You a:
                   <select
-                    name="role"
-                    value={formData.role}
+                    name="user_type"
+                    value={formData.user_type}
                     onChange={handleInputChange}
                     className="text-textColor font-semibold text-[15px] 
                     leading-7 px-4 py-3 focus:outline-none"
                   >
-                    <option value="patient">Patient</option>
+                    <option value="regular">Patient</option>
                     <option value="doctor">Doctor</option>
                   </select>
                 </label>
@@ -101,7 +122,7 @@ const Signup = () => {
               <div className="mt-7">
                 <button
                   type="submit"
-                  className="w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3 "
+                  className={`w-full ${mutateUser.isLoading ? 'bg-gray-500' : 'bg-primaryColor'} text-white text-[18px] leading-[30px] rounded-lg px-4 py-3`}
                 >
                   Sign Up
                 </button>

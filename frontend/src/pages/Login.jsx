@@ -1,14 +1,47 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useMutation } from 'react-query';
+import { useAuth } from "../context/AuthProvider";
+
 
 const Login = () => {
+  const navigate = useNavigate()
+  const { setIsLogedin, setUser } = useAuth()
+
   const [formData, setFormData] = useState({
-    email: "",
+    username: "",
     password: "",
   });
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  const mutateLogin = useMutation(
+    ['posts'],
+    (loginUser) => {
+      return fetch('http://127.0.0.1:8000/main/api/login/', {
+        method: 'POST',
+        body: JSON.stringify(loginUser),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      }).then((response) => response.json())
+    }
+  )
+
+  const submitHandler = async event =>{
+    event.preventDefault()
+    try {
+      const res = await mutateLogin.mutateAsync(formData)
+      localStorage.setItem('user', JSON.stringify(res?.user));
+      setIsLogedin(true)
+      setUser(res?.user)
+      navigate('/')
+    } catch(e){
+      console.log(e.message)
+    }
+  }
+
   return (
     <section className="px-5 lg:px-0">
       <div className="w-full max-w-[570px] mx-auto rounded-lg shadow-md md:p-10">
@@ -16,13 +49,13 @@ const Login = () => {
           Hello! <span className="text-primaryColor">Welcome </span>Back
         </h3>
 
-        <form className="py-4 md:py-0">
+        <form onSubmit={submitHandler} className="py-4 md:py-0">
           <div className="mb-5">
             <input
-              type="email"
-              placeholder="Enter Your Email"
-              name="email"
-              value={formData.email}
+              type="text"
+              placeholder="Enter Your username"
+              name="username"
+              value={formData.username}
               onChange={handleInputChange}
               className="w-full py-3 border-b border-solid 
               border-[#0066ff61] focus:outline-none 
@@ -52,7 +85,7 @@ const Login = () => {
           <div className="mt-7">
             <button
               type="submit"
-              className="w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3 "
+              className={`w-full ${mutateLogin.isLoading ? 'bg-gray-500' : 'bg-primaryColor'} text-white text-[18px] leading-[30px] rounded-lg px-4 py-3`}
             >
               Login
             </button>

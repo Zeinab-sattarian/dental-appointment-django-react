@@ -1,5 +1,3 @@
-import React from "react";
-
 import heroImg01 from "../assets/images/hero-Img01.png";
 import heroImg02 from "../assets/images/hero-Img02.png";
 import heroImg03 from "../assets/images/hero-Img03.png";
@@ -301,7 +299,7 @@ const Home = () => {
         <div className="container">
           <div className="xl:w-[470px] mx-auto">
             <h2 className="heading text-center">
-              Our Patients' Experience With Us
+              Our Patients Experience With Us
             </h2>
             <p className="text__para text-center">
               World class free of charge care for underpriviledged children
