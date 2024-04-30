@@ -7,25 +7,25 @@ import { useAuth } from "../context/AuthProvider";
 const ProtectedRoute = ({ children, role }) => {
   
     const navigate = useNavigate();
-    const {isLogedin, user} = useAuth()
+    const {token, userType} = useAuth()
 
     useEffect(() => {
-      if(!isLogedin){
+      if(!token){
         navigate('/login')
       }
-    }, [isLogedin])
+    }, [token])
 
     useEffect(() => {
-      if(user?.user_type !== role){
+      if(userType !== role){
         navigate('/')
       }
-    }, [user])
+    }, [userType])
 
     return (
         <React.Fragment>
             {
                 // eslint-disable-next-line react/prop-types
-                isLogedin ? children : null
+                token ? children : null
             }
         </React.Fragment>
     );

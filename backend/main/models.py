@@ -15,6 +15,9 @@ class User(AbstractUser):
 
 class DoctorProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='doctor_profile')
+    major = models.CharField(max_length=255, default='major')
+    experience = models.CharField(max_length=255, default='experience')
+    about = models.TextField(default='about')
     # Additional doctor-specific fields can go here, if any.
     # For now, we'll assume all specific fields are covered by the User model.
     def __str__(self):
@@ -32,5 +35,5 @@ class Time(models.Model):
     doctor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='times', limit_choices_to={'user_type': 'doctor'})
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='reserved_times', limit_choices_to={'user_type': 'regular'})
     dateTime = models.DateTimeField()
+    hour = models.CharField(max_length=255, default='hour')
     available = models.BooleanField(default=True)
-    text = models.TextField(blank=True, null=True)

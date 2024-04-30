@@ -27,6 +27,9 @@
         <li><a href="#prerequisites">Prerequisites</a></li>
       </ul>
     </li>
+    <li>
+      <a href="#getting-started-with-docker">Getting Started With Docker</a>
+    </li>
   </ol>
 </details>
 
@@ -106,6 +109,27 @@ This is an example of how to list things you need to use the software and how to
   python3 manage.py runserver
 
   ```
+
+
+## Getting Started With Docker
+
+you can start both backend and frontend toghether with docker
+
+*Install Docker Desktop
+
+then 
+
+* run
+  ```sh
+  docker compose up
+
+  ```
+
+*frontend server: ```localhost:3000```
+*backend server: ```localhost:8000```
+
+
+
 
 
 

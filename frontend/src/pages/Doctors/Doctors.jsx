@@ -34,7 +34,7 @@ const Doctors = () => {
         <div className="container">
           <div className="xl:w-[470px] mx-auto">
             <h2 className="heading text-center">
-              Our Patients' Experience With Us
+              Our Patients Experience With Us
             </h2>
             <p className="text__para text-center">
               World class free of charge care for underpriviledged children

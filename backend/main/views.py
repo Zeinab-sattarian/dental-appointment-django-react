@@ -3,12 +3,16 @@ from rest_framework import status, generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.contrib.auth import authenticate, login, logout
+from rest_framework import views, permissions, status
 from rest_framework.permissions import IsAuthenticated
-from .models import Time, Review
+from .models import DoctorProfile, Time, Review
 from .permissions import IsDoctor
 from .serializer import *
 from .permissions import IsRegularUser
 from django.contrib.auth import get_user_model
+from .authentication import JWTAuthentication
+
+
 
 User = get_user_model()
 
@@ -23,27 +27,34 @@ class SignupAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class LoginAPIView(APIView):
-    def post(self, request):
-        username = request.data.get('username')
-        password = request.data.get('password')
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return Response({'message': 'Successfully logged in.', 'user': { 'userId': user.id, 'username': user.username, 'user_type': user.user_type }}, status=status.HTTP_200_OK)
-        else:
+class ObtainTokenView(views.APIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = ObtainTokenSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        username_or_phone_number = serializer.validated_data.get('username')
+        password = serializer.validated_data.get('password')
+
+        user = User.objects.filter(username=username_or_phone_number).first()
+        if user is None:
+            user = User.objects.filter(phone_number=username_or_phone_number).first()
+
+        if user is None or not user.check_password(password):
             return Response({'message': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
 
+        # Generate the JWT token
+        jwt_token = JWTAuthentication.create_jwt(user)
 
-class LogoutAPIView(APIView):
-    def get(self, request):
-        logout(request)
-        return Response({'message': 'Successfully logged out.'})
+        return Response({'token': jwt_token, 'userType': user.user_type})
 
 
 class TimeCreateAPIView(generics.CreateAPIView):
     queryset = Time.objects.all()
-    serializer_class = TimeSerializer
+    serializer_class = CreateTimeSerializer
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated, IsDoctor]
 
     def perform_create(self, serializer):
@@ -53,6 +64,7 @@ class TimeCreateAPIView(generics.CreateAPIView):
 class ReviewCreateAPIView(generics.CreateAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated, IsRegularUser]
 
     def perform_create(self, serializer):
@@ -61,6 +73,7 @@ class ReviewCreateAPIView(generics.CreateAPIView):
 
 class DoctorReviewsAPIView(generics.ListAPIView):
     serializer_class = ReviewSerializer
+    authentication_classes = [JWTAuthentication]
 
     def get_queryset(self):
         """
@@ -77,8 +90,10 @@ class ListDoctorsAPIView(generics.ListAPIView):
 
 
 class DoctorDetailAPIView(generics.RetrieveAPIView):
-    queryset = User.objects.filter(user_type='doctor')
-    serializer_class = DoctorSerializer
+    serializer_class = DoctorDetailSerializer
+    def get_queryset(self):
+        doctor_id = self.kwargs['pk']
+        return DoctorProfile.objects.get(user__id=doctor_id)
 
 
 class AvailableTimesAPIView(generics.ListAPIView):
@@ -92,6 +107,7 @@ class AvailableTimesAPIView(generics.ListAPIView):
 class AllTimesAPIView(generics.ListAPIView):
     serializer_class = TimeSerializer
     permission_classes = [IsAuthenticated, IsDoctor]
+    authentication_classes = [JWTAuthentication]
 
     def get_queryset(self):
         return Time.objects.filter(doctor=self.request.user)
@@ -100,6 +116,7 @@ class AllTimesAPIView(generics.ListAPIView):
 class NotAvailableTimesAPIView(generics.ListAPIView):
     serializer_class = TimeSerializer
     permission_classes = [IsAuthenticated, IsDoctor]
+    authentication_classes = [JWTAuthentication]
 
     def get_queryset(self):
         return Time.objects.filter(doctor=self.request.user, available=False)
@@ -107,6 +124,7 @@ class NotAvailableTimesAPIView(generics.ListAPIView):
 
 class UserTimesAPIView(generics.ListAPIView):
     serializer_class = TimeSerializer
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
@@ -116,6 +134,7 @@ class UserTimesAPIView(generics.ListAPIView):
 class BookTimeAPIView(generics.UpdateAPIView):
     queryset = Time.objects.all()
     serializer_class = TimeSerializer
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def perform_update(self, serializer):

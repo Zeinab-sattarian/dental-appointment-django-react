@@ -17,30 +17,22 @@ const SidePanel = () => {
             <p className="text-[15px] leading-6 text-textColor font-semibold">
               Sunday
             </p>
-            <p className="text-[15px] leading-6 text-textColor font-semibold">
-              4:00 PM - 9:30 PM
-            </p>
+            <button className="btn px-4 w-fit mt-0 rounded-md">Book</button>
           </li>
           <li className="flex items-center justify-between mb-2">
             <p className="text-[15px] leading-6 text-textColor font-semibold">
               Tuesday
             </p>
-            <p className="text-[15px] leading-6 text-textColor font-semibold">
-              4:00 PM - 9:30 PM
-            </p>
+            <button className="btn px-4 w-fit mt-0 rounded-md">Book</button>
           </li>
           <li className="flex items-center justify-between mb-2">
             <p className="text-[15px] leading-6 text-textColor font-semibold">
               Thursday
             </p>
-            <p className="text-[15px] leading-6 text-textColor font-semibold">
-              4:00 PM - 7:00 PM
-            </p>
+            <button className="btn w-fit px-4 mt-0 rounded-md">Book</button>
           </li>
         </ul>
       </div>
-
-      <button className="btn px-2 w-full rounded-md">Book Appointment</button>
     </div>
   );
 };

@@ -6,7 +6,7 @@ import { useAuth } from "../context/AuthProvider";
 
 const Login = () => {
   const navigate = useNavigate()
-  const { setIsLogedin, setUser } = useAuth()
+  const { setToken, setUserType } = useAuth()
 
   const [formData, setFormData] = useState({
     username: "",
@@ -33,9 +33,10 @@ const Login = () => {
     event.preventDefault()
     try {
       const res = await mutateLogin.mutateAsync(formData)
-      localStorage.setItem('user', JSON.stringify(res?.user));
-      setIsLogedin(true)
-      setUser(res?.user)
+      localStorage.setItem('token', JSON.stringify(res?.token));
+      localStorage.setItem('userType', JSON.stringify(res?.userType));
+      setToken(res?.token)
+      setUserType(res?.userType)
       navigate('/')
     } catch(e){
       console.log(e.message)

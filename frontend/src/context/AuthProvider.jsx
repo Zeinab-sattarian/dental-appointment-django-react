@@ -3,20 +3,21 @@ const AuthContext = createContext();
 
 // eslint-disable-next-line react/prop-types
 const AuthProvider = ({ children }) => {
-  const localUser = localStorage.getItem('user');
-  const [isLogedin, setIsLogedin] = useState(localUser && JSON.parse(localUser)?.userId ? true : false);
-  const [user, setUser] = useState(JSON.parse(localUser));
+  const tokenLocal = localStorage.getItem('token');
+  const userTypeLocal = localStorage.getItem('userType');
+  const [token, setToken] = useState(JSON.parse(tokenLocal));
+  const [userType, setUserType] = useState(JSON.parse(userTypeLocal));
 
   useEffect(() => {
-    if(localUser && JSON.parse(localUser)?.userId){
-      setUser(JSON.parse(localUser))
-      setIsLogedin(true)
+    if(tokenLocal && userTypeLocal){
+      setUserType(JSON.parse(userTypeLocal))
+      setToken(JSON.parse(tokenLocal))
     }
-  }, [localUser])
+  }, [tokenLocal, userTypeLocal])
 
 
   return (
-    <AuthContext.Provider value={{ isLogedin, setIsLogedin, user, setUser }}>
+    <AuthContext.Provider value={{ token, setToken, userType, setUserType }}>
       {children}
     </AuthContext.Provider>
   );

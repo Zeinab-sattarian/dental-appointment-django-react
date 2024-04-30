@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from .models import Time, Review
+from .models import DoctorProfile, Time, Review
 
 
 User = get_user_model()
@@ -21,10 +21,10 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
-class TimeSerializer(serializers.ModelSerializer):
+class CreateTimeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Time
-        fields = ['id', 'dateTime', 'available', 'text', 'doctor']
+        fields = ['id', 'dateTime', 'available', 'hour', 'doctor']
         read_only_fields = ['doctor']  # Doctor will be set based on the request user
 
     def create(self, validated_data):
@@ -50,8 +50,19 @@ class DoctorSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'name', 'user_type', 'password']
         # You might want to customize the fields based on what details about the doctor you want to expose.
 
+class DoctorDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DoctorProfile
+        fields = ['id', 'user', 'about', 'experience', 'major']
+        # You might want to customize the fields based on what details about the doctor you want to expose.
+
     
 class TimeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Time
-        fields = ['id', 'doctor', 'dateTime', 'available', 'text', 'user']
+        fields = ['id', 'doctor', 'dateTime', 'available', 'hour', 'user']
+
+
+class ObtainTokenSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()
