@@ -1,11 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import signupImg from "../assets/images/signup.gif";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from 'react-query';
+import { useAuth } from "../context/AuthProvider";
 
 
 const Signup = () => {
   const navigate = useNavigate()
+  const { token } = useAuth()
+
+  useEffect(() => {
+    if(token){
+      navigate('/')
+    }
+  }, [])
+
   const [formData, setFormData] = useState({
     name: "",
     username: "",

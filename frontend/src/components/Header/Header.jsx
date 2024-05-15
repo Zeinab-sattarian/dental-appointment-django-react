@@ -1,8 +1,9 @@
 import {useEffect,useRef} from "react";
 import logo from '../../assets/images/logo.png';
 import userImg from '../../assets/images/avatar-icon.png';
-import {NavLink, Link} from 'react-router-dom'
+import {NavLink, Link, useNavigate} from 'react-router-dom'
 import {BiMenu} from "react-icons/bi";
+import { useAuth } from "../../context/AuthProvider";
 
 
 
@@ -29,6 +30,17 @@ const navLinks = [
 const Header = () => {
   const headerRef = useRef(null)
   const menuRef = useRef(null)
+  const navigate = useNavigate()
+
+  const { token, setToken, userType, setUserType  } = useAuth()
+
+  const logout = () => {
+    setToken(undefined)
+    setUserType(undefined)
+    localStorage.removeItem('userType')
+    localStorage.removeItem('token')
+    navigate('/')
+  }
 
 
 
@@ -56,7 +68,7 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/*============ logo =================*/}
           <div>
-            <img src={logo} alt=""/>
+            <img src={logo} className="object-cover" alt=""/>
       
           </div>
 
@@ -79,9 +91,25 @@ const Header = () => {
                   </figure>
                   </Link>
                 </div>
-                <Link to='/login'>
-                  <button className="bg-primaryColor py-2 px-6 text-white font-[600] h-[44px] flex items-center justify-center rounded-[50px]">Login</button>
-                </Link>
+                {token && userType ? (
+                  <button onClick={logout} className="bg-primaryColor py-2 px-6 text-white font-[600] h-[44px] flex items-center justify-center rounded-[50px]">Logout</button>
+
+                ) : (
+                  <Link to='/login'>
+                    <button className="bg-primaryColor py-2 px-6 text-white font-[600] h-[44px] flex items-center justify-center rounded-[50px]">Login</button>
+                  </Link>
+                )}
+
+                {userType && userType === 'doctor' ? (
+                  <Link to='/doctor/dashboard'>
+                    <button className="bg-primaryColor py-2 px-6 text-white font-[600] h-[44px] flex items-center justify-center rounded-[50px]">Dashboard</button>
+                  </Link>
+                ) : userType === 'regular' ? (
+                  <Link to='/appointments'>
+                    <button className="bg-primaryColor py-2 px-6 text-white font-[600] h-[44px] flex items-center justify-center rounded-[50px]">Appointments</button>
+                  </Link>
+                ) : null}
+                
 
                 <span className="md:hidden" onClick={toggleMenu}>
                   <BiMenu className="w-6 h-6 cursor-pointer" />

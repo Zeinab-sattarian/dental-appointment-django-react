@@ -1,51 +1,39 @@
-import React from "react";
 import { useState } from "react";
-import { AiFillStar } from "react-icons/ai";
+import { useMutation } from 'react-query';
+import { useParams } from "react-router-dom";
 
-const FeedbackForm = () => {
-  const [rating, setRating] = useState(0);
-  const [hover, setHover] = useState(0);
+
+const FeedbackForm = ({ refetch }) => {
+  const params = useParams()
   const [reviewText, setReviewText] = useState("");
+
+  const mutateReview = useMutation(
+    ['reviews'],
+    (newReview) => {
+      return fetch('http://127.0.0.1:8000/main/api/reviews/create/', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+        body: JSON.stringify(newReview),
+      }).then((response) => response.json())
+    }
+  )
+
   const handleSubmitReview = async (e) => {
     e.preventDefault();
+    if(reviewText && reviewText !== ""){
+      try {
+        await mutateReview.mutateAsync({ text: reviewText, doctor_id: Number(params.id)})
+        refetch()
+      } catch(e){
+        console.log(e.message)
+      } 
+    }
   };
 
   return (
-    <form action="">
-      <div>
-        <h3 className="text-headingColor text-[16px] leading-6 font-semibold mb-4 mt-0">
-          How would you rate the overall experience?*
-        </h3>
-
-        <div>
-          {[...Array(5).keys()].map((_, index) => {
-            index += 1;
-            return (
-              <button
-                key={index}
-                type="button"
-                className={`${
-                  index <= ((rating && hover) || hover)
-                    ? "text-yellowColor"
-                    : "text-gray-400"
-                } bg-transparent border-none outline-none text-[22px] cursor-pointer `}
-                onMouseEnter={() => setHover(index)}
-                onMouseLeave={() => setHover(rating)}
-                onClick={() => setRating(index)}
-                onDoubleClick={() => {
-                  setHover(0);
-                  setRating(0);
-                }}
-              >
-                <span>
-                  <AiFillStar />
-                </span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
+    <form action="" onSubmit={handleSubmitReview()}>
       <div className="mt-[30px]">
         <h3 className="text-headingColor text-[16px] leading-6 font-semibold mb-4 mt-0">
           Share Your Feedback or Suggestions?*

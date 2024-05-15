@@ -8,15 +8,17 @@ import featureImg from "../assets/images/feature-Img.png";
 import videoIcon from "../assets/images/video-icon.png";
 import avatarIcon from "../assets/images/avatar-icon.png";
 import faqImg from "../assets/images/faq-img.png";
-import { Link } from "react-router-dom";
-import { BsArrowRight } from "react-icons/bs";
 import About from "../components/About/About";
 import ServicesList from "../components/Services/ServicesList";
 import DoctorList from "../components/Doctors/DoctorList";
 import FaqList from "../components/Faq/FaqList";
 import Testimonials from "../components/Testimonials/Testimonials";
+import { useNavigate } from "react-router-dom";
+
 
 const Home = () => {
+  const navigate = useNavigate()
+
   return (
     <>
       {/*=========== hero section ============*/}
@@ -39,7 +41,7 @@ const Home = () => {
                   dental services, regardless of their financial situation.
                 </p>
 
-                <button className="btn">Request an Appointment</button>
+                <button className="btn" onClick={() => navigate('/doctors')}>Request an Appointment</button>
               </div>
 
               {/*=========== hero counter ============*/}
@@ -72,11 +74,11 @@ const Home = () => {
             {/*=========== hero content ============*/}
             <div className="flex gap-[30px] justify-end">
               <div>
-                <img className="w-full" src={heroImg01} alt="" />
+                <img className="w-full rounded-2xl object-cover" src={heroImg01} alt="" />
               </div>
               <div className="mt-[30px]">
-                <img className="w-full mb-[30px]" src={heroImg02} alt="" />
-                <img className="w-full" src={heroImg03} alt="" />
+                <img className="w-full mb-[30px] rounded-2xl object-cover" src={heroImg02} alt="" />
+                <img className="w-full rounded-2xl object-cover" src={heroImg03} alt="" />
               </div>
             </div>
           </div>
@@ -116,13 +118,6 @@ const Home = () => {
                   their financial means. Schedule your appointment today and
                   join a community committed to oral health and wellness.
                 </p>
-                <Link
-                  to="/doctors"
-                  className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] 
-                  mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none "
-                >
-                  <BsArrowRight />
-                </Link>
               </div>
             </div>
             <div className="py-[30px] px-5">
@@ -140,14 +135,6 @@ const Home = () => {
                   center that aligns with your needs, ensuring you receive the
                   care you deserve in a welcoming and supportive environment.
                 </p>
-                <Link
-                  to="/doctors"
-                  className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] 
-                  mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor 
-                  hover:border-none "
-                >
-                  <BsArrowRight />
-                </Link>
               </div>
             </div>
             <div className="py-[30px] px-5">
@@ -165,14 +152,6 @@ const Home = () => {
                   select the best time and date for your needs. Book your
                   appointment now and smile brighter tomorrow.
                 </p>
-                <Link
-                  to="/doctors"
-                  className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] 
-                  mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor 
-                  hover:border-none "
-                >
-                  <BsArrowRight />
-                </Link>
               </div>
             </div>
           </div>
@@ -216,13 +195,10 @@ const Home = () => {
                   sheduling tool to select an appointment
                 </li>
               </ul>
-              <Link to="/">
-                <button className="btn">Learn more</button>
-              </Link>
             </div>
             {/*=========== feature img ============*/}
             <div className="relative z-10 xl:w-[770px] flex justify-end mt-[50px] lg:mt-0">
-              <img src={featureImg} className="w-3/4" alt="" />
+              <img src={featureImg} className="w-3/4 rounded-2xl object-cover" alt="" />
 
               <div
                 className="w-[150px] lg:w-[248px] bg-white absolute bottom-[50px] 
@@ -286,7 +262,7 @@ const Home = () => {
             </div>
 
             <div className="w-full md:w-1/2">
-              <h2 className="heading"> Questions you might have</h2>
+              <h2 className="heading mb-5"> Questions you might have</h2>
               <FaqList />
             </div>
           </div>

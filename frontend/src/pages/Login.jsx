@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from 'react-query';
 import { useAuth } from "../context/AuthProvider";
@@ -6,7 +6,13 @@ import { useAuth } from "../context/AuthProvider";
 
 const Login = () => {
   const navigate = useNavigate()
-  const { setToken, setUserType } = useAuth()
+  const { setToken, setUserType, token } = useAuth()
+
+  useEffect(() => {
+    if(token){
+      navigate('/')
+    }
+  }, [])
 
   const [formData, setFormData] = useState({
     username: "",
@@ -33,11 +39,18 @@ const Login = () => {
     event.preventDefault()
     try {
       const res = await mutateLogin.mutateAsync(formData)
-      localStorage.setItem('token', JSON.stringify(res?.token));
-      localStorage.setItem('userType', JSON.stringify(res?.userType));
-      setToken(res?.token)
-      setUserType(res?.userType)
-      navigate('/')
+      if(res?.token){
+        localStorage.setItem('token', res?.token);
+        setToken(res?.token)
+      }
+      if(res?.userType){
+        localStorage.setItem('userType', res?.userType);
+        setUserType(res?.userType)
+      }
+      if(res?.userType && res?.token){
+        navigate('/')
+      }
+      console.log(res)
     } catch(e){
       console.log(e.message)
     }

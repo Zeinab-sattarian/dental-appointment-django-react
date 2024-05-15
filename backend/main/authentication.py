@@ -33,9 +33,7 @@ class JWTAuthentication(authentication.BaseAuthentication):
 
         user = User.objects.filter(username=username_or_phone_number).first()
         if user is None:
-            user = User.objects.filter(phone_number=username_or_phone_number).first()
-            if user is None:
-                raise AuthenticationFailed('User not found')
+            raise AuthenticationFailed('User not found')
 
         # Return the user and token payload
         return user, payload
@@ -48,7 +46,7 @@ class JWTAuthentication(authentication.BaseAuthentication):
         # Create the JWT payload
         payload = {
             'user_identifier': user.username,
-            'exp': int((datetime.now() + timedelta(hours=1)).timestamp()),
+            'exp': int((datetime.now() + timedelta(hours=12)).timestamp()),
             # set the expiration time for 5 hour from now
             'iat': datetime.now().timestamp(),
             'username': user.username,

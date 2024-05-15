@@ -154,3 +154,6 @@ AUTH_USER_MODEL = 'main.User'
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
 ]
+
+ALLOWED_HOSTS = ['*']
+

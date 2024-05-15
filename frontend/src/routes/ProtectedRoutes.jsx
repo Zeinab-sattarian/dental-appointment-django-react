@@ -19,7 +19,7 @@ const ProtectedRoute = ({ children, role }) => {
       if(userType !== role){
         navigate('/')
       }
-    }, [userType])
+    }, [userType, role])
 
     return (
         <React.Fragment>

@@ -34,23 +34,25 @@ class CreateTimeSerializer(serializers.ModelSerializer):
 
 
 class ReviewSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
     class Meta:
         model = Review
-        fields = ['id', 'doctor', 'user', 'text']
-        read_only_fields = ['user']  # User will be set based on the request user
-
-    def create(self, validated_data):
-        validated_data['user'] = self.context['request'].user
-        return super().create(validated_data)
+        fields = ['id', 'doctor', 'user', 'text', 'created_at']
+    
+class CreateReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = ['doctor_id', 'text']
     
 
 class DoctorSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'name', 'user_type', 'password']
+        fields = ['id', 'username', 'name', 'user_type']
         # You might want to customize the fields based on what details about the doctor you want to expose.
 
 class DoctorDetailSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
     class Meta:
         model = DoctorProfile
         fields = ['id', 'user', 'about', 'experience', 'major']
@@ -60,7 +62,7 @@ class DoctorDetailSerializer(serializers.ModelSerializer):
 class TimeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Time
-        fields = ['id', 'doctor', 'dateTime', 'available', 'hour', 'user']
+        fields = ['id', 'doctor', 'dateTime', 'available', 'hour', 'user', 'phone_number']
 
 
 class ObtainTokenSerializer(serializers.Serializer):

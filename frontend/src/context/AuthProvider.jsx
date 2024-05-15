@@ -5,13 +5,13 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const tokenLocal = localStorage.getItem('token');
   const userTypeLocal = localStorage.getItem('userType');
-  const [token, setToken] = useState(JSON.parse(tokenLocal));
-  const [userType, setUserType] = useState(JSON.parse(userTypeLocal));
+  const [token, setToken] = useState(tokenLocal);
+  const [userType, setUserType] = useState(userTypeLocal);
 
   useEffect(() => {
     if(tokenLocal && userTypeLocal){
-      setUserType(JSON.parse(userTypeLocal))
-      setToken(JSON.parse(tokenLocal))
+      setUserType(userTypeLocal)
+      setToken(tokenLocal)
     }
   }, [tokenLocal, userTypeLocal])
 

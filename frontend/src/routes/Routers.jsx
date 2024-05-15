@@ -13,9 +13,10 @@ import BookedTimes from "../pages/DoctorDashboard/BookedTimes";
 import AvailableTimes from "../pages/DoctorDashboard/AvailableTimes";
 import AllTimes from "../pages/DoctorDashboard/AllTimes";
 import Reviews from "../pages/DoctorDashboard/Reviews";
-import Appointments from "../pages/UserDashboad/Appointments";
-import CreateAppointment from "../pages/UserDashboad/CreateAppointment";
-import DoctorTimes from "../pages/Doctors/DoctorTimes";
+import Appointments from "../pages/UserDashboard/Appointments";
+import CreateAppointment from "../pages/UserDashboard/CreateAppointment";
+import Profile from "../pages/DoctorDashboard/Profile";
+import DoctorDashboard from "../pages/DoctorDashboard/DoctorDashboard";
 
 const Routers = () => {
   return(
@@ -35,11 +36,12 @@ const Routers = () => {
       <Route path="/time/available" element={<ProtectedRoute role="doctor"><AvailableTimes /></ProtectedRoute>} />
       <Route path="/time/all" element={<ProtectedRoute role="doctor"><AllTimes /></ProtectedRoute>} />
       <Route path="/review/all" element={<ProtectedRoute role="doctor"><Reviews /></ProtectedRoute>} />
+      <Route path="/profile" element={<ProtectedRoute role="doctor"><Profile /></ProtectedRoute>} />
+      <Route path="/doctor/dashboard" element={<ProtectedRoute role="doctor"><DoctorDashboard /></ProtectedRoute>} />
 
       {/* user dashboard */}
       <Route path="/appointments" element={<ProtectedRoute role="regular"><Appointments /></ProtectedRoute>} />
-      <Route path="/appointment/create/:id" element={<ProtectedRoute role="regular"><CreateAppointment /></ProtectedRoute>} />
-      <Route path="/doctor/times" element={<ProtectedRoute role="regular"><DoctorTimes /></ProtectedRoute>} />
+      <Route path="/appointment/create" element={<ProtectedRoute role="regular"><CreateAppointment /></ProtectedRoute>} />
     </Routes>
   )
 }
