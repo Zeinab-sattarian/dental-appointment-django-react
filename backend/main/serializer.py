@@ -34,10 +34,9 @@ class CreateTimeSerializer(serializers.ModelSerializer):
 
 
 class ReviewSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
     class Meta:
         model = Review
-        fields = ['id', 'doctor', 'user', 'text', 'created_at']
+        fields = ['id', 'doctor', 'text', 'created_at']
     
 class CreateReviewSerializer(serializers.ModelSerializer):
     class Meta:

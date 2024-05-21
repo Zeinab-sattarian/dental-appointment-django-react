@@ -64,7 +64,7 @@ class TimeCreateAPIView(generics.CreateAPIView):
 
 class ReviewCreateAPIView(views.APIView):
     permission_classes = [permissions.AllowAny]
-
+    
     def post(self, request, *args, **kwargs):
 
         doctor_id = request.data['doctor_id']
@@ -72,10 +72,7 @@ class ReviewCreateAPIView(views.APIView):
 
         doctor = User.objects.filter(id=doctor_id).first()
         if doctor is not None:
-            if request.user.is_authenticated and request.user.user_type == 'regular':
-                Review.objects.create(doctor=doctor, text=text, user=request.user)
-            else:
-                Review.objects.create(doctor=doctor, text=text)
+            Review.objects.create(doctor=doctor, text=text)
         else:
             return Response({'message': 'Invalid input'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -132,13 +129,6 @@ class DoctorDetailAPIView(generics.RetrieveAPIView):
         doctor_id = self.kwargs['pk']
         return DoctorProfile.objects.filter(user__id=doctor_id).first()
 
-
-class AvailableTimesAPIView(generics.ListAPIView):
-    serializer_class = TimeSerializer
-
-    def get_queryset(self):
-        doctor_id = self.kwargs['doctor_id']
-        return Time.objects.filter(doctor__id=doctor_id, available=True)
 
 
 class AvailableTimesAPIView(generics.ListAPIView):

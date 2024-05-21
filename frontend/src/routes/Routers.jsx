@@ -41,7 +41,7 @@ const Routers = () => {
 
       {/* user dashboard */}
       <Route path="/appointments" element={<ProtectedRoute role="regular"><Appointments /></ProtectedRoute>} />
-      <Route path="/appointment/create" element={<ProtectedRoute role="regular"><CreateAppointment /></ProtectedRoute>} />
+      <Route path="/appointment/create/:id" element={<ProtectedRoute role="regular"><CreateAppointment /></ProtectedRoute>} />
     </Routes>
   )
 }

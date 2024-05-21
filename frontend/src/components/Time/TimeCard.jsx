@@ -6,7 +6,6 @@ const TimeCard = ({ time }) => {
       <h1 className='text-lg font-bold'>{time?.hour}</h1>
       {time?.phone_number && <h1 className='text-lg font-bold'>{time?.phone_number}</h1>}
       <h1 className={`${time?.available ? 'text-primaryColor' : 'text-blue-500'} text-lg font-bold`}>{time?.available ? 'Available' : 'Booked'}</h1>
-      <button className='text-white bg-red-500 rounded-lg px-4 py-2 border border-white'>Delete</button>
     </div>
   )
 }

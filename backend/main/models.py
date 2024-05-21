@@ -25,7 +25,6 @@ class DoctorProfile(models.Model):
 
 class Review(models.Model):
     doctor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='given_reviews', limit_choices_to={'user_type': 'doctor'})
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='received_reviews', null=True, blank=True, limit_choices_to={'user_type': 'regular'})
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 

@@ -10,16 +10,14 @@ const ProtectedRoute = ({ children, role }) => {
     const {token, userType} = useAuth()
 
     useEffect(() => {
-      if(!token){
+      if(!token && !userType){
+        navigate('/login')
+      }else if(token && userType && userType !== role){
+        navigate('/')
+      }else{
         navigate('/login')
       }
-    }, [token])
-
-    useEffect(() => {
-      if(userType !== role){
-        navigate('/')
-      }
-    }, [userType, role])
+    }, [token, userType, role])
 
     return (
         <React.Fragment>
