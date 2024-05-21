@@ -12,10 +12,9 @@ const ProtectedRoute = ({ children, role }) => {
     useEffect(() => {
       if(!token && !userType){
         navigate('/login')
-      }else if(token && userType && userType !== role){
+      } 
+      if(token && userType && userType.length && userType !== role){
         navigate('/')
-      }else{
-        navigate('/login')
       }
     }, [token, userType, role])
 
