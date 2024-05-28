@@ -5,6 +5,7 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const tokenLocal = localStorage.getItem('token');
   const userTypeLocal = localStorage.getItem('userType');
+
   const [token, setToken] = useState(tokenLocal);
   const [userType, setUserType] = useState(userTypeLocal);
 
@@ -23,6 +24,7 @@ const AuthProvider = ({ children }) => {
   );
 };
 export default AuthProvider;
+
 export const useAuth = () => {
   return useContext(AuthContext);
 };

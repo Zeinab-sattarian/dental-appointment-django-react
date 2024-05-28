@@ -29,9 +29,11 @@ const AllTimes = () => {
             <h3 className="text-headingColor text-[22px] leading-9 font-bold mb-5">
               All <span className="text-primaryColor">Times</span>
             </h3>
-            {getTimes?.data && getTimes?.data?.length ? getTimes?.data?.map(time => (
-              <TimeCard key={time?.id} time={time} />
-            )) : null}
+            {
+              getTimes?.data && getTimes?.data?.length ? getTimes?.data?.map(time => (
+                <TimeCard key={time?.id} time={time} />
+              )) : null
+            }
           </div>
         </div>
       </div>

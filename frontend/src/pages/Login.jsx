@@ -23,7 +23,7 @@ const Login = () => {
   };
 
   const mutateLogin = useMutation(
-    ['posts'],
+    ['login'],
     (loginUser) => {
       return fetch('http://127.0.0.1:8000/main/api/login/', {
         method: 'POST',
