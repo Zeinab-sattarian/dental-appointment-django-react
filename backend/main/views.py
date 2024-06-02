@@ -11,6 +11,7 @@ from .serializer import *
 from .permissions import IsRegularUser
 from django.contrib.auth import get_user_model
 from .authentication import JWTAuthentication
+from django.core.mail import send_mail
 
 
 
@@ -116,10 +117,14 @@ class AllReviewsAPIView(generics.ListAPIView):
 
 
 class ListDoctorsAPIView(generics.ListAPIView):
-    queryset = User.objects.filter(user_type='doctor')
     serializer_class = DoctorSerializer
-    permission_classes = []
-    authentication_classes = []
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.AllowAny]
+
+    def get_queryset(self):
+        if self.request.META.get('HTTP_AUTHORIZATION'):
+            return DoctorProfile.objects.filter(user__user_type='doctor', user__city=self.request.user.city)
+        return DoctorProfile.objects.filter(user__user_type='doctor')
 
 
 class DoctorDetailAPIView(generics.RetrieveAPIView):
@@ -182,6 +187,7 @@ class BookTimeAPIView(views.APIView):
     def patch(self, request):
 
         time_id = request.data['time_id']
+        email = request.data['email']
         phone_number = request.data['phone_number']
 
         time = Time.objects.get(id=time_id)
@@ -189,11 +195,35 @@ class BookTimeAPIView(views.APIView):
         if time.available and not time.user:
             time.phone_number=phone_number
             time.available = False
+            time.email = email
             time.user=self.request.user
             time.save()
             return Response({'message': 'successfully updated'})
         else:
             raise ValidationError('This time slot is not available for booking.')
+        
+
+class ApproveTimeAPIView(views.APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated, IsDoctor]
+
+    def patch(self, request):
+
+        try:
+            time_id = request.data['time_id']
+
+            time = Time.objects.get(id=time_id)
+
+            time.approved = True
+            send_mail(
+                'Approved Appointment', 
+                'Your Appointment at ' + str(time.dateTime) + ' - ' + time.hour + ' with ' + time.doctor.name + ' has been approved' , 
+                'm.h.rostami565@gmail.com',
+                [time.email])
+            time.save()
+            return Response({'message': 'successfully updated'})
+        except:
+            raise ValidationError('error while approving.')
         
 
 

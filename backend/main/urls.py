@@ -19,4 +19,5 @@ urlpatterns = [
     path('api/doctors/profile/update/', UpdateDoctorProfileAPIView.as_view(), name='update-profile'),
     path('api/user/times/', UserTimesAPIView.as_view(), name='user-times'),
     path('api/times/book/', BookTimeAPIView.as_view(), name='book-time'),
+    path('api/times/approve/', ApproveTimeAPIView.as_view(), name='approve-time'),
 ]

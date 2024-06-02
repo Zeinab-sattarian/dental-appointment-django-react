@@ -10,6 +10,7 @@ class User(AbstractUser):
     )
     user_type = models.CharField(max_length=10, choices=USER_TYPE_CHOICES, default='regular')
     name = models.CharField(max_length=255)
+    city = models.CharField(max_length=255, blank=True, null=True)
     # The username and password fields come from AbstractUser.
 
 
@@ -33,6 +34,8 @@ class Time(models.Model):
     doctor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='times', limit_choices_to={'user_type': 'doctor'})
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='reserved_times', limit_choices_to={'user_type': 'regular'})
     dateTime = models.DateTimeField()
+    email = models.EmailField(blank=True, null=True)
     hour = models.CharField(max_length=255)
     available = models.BooleanField(default=True)
+    approved = models.BooleanField(default=False)
     phone_number = models.CharField(max_length=255, null=True, blank=True)

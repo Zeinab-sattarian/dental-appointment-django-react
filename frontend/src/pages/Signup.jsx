@@ -20,6 +20,7 @@ const Signup = () => {
     username: "",
     password: "",
     user_type: "regular",
+    city: "tehran"
   });
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -112,6 +113,23 @@ const Signup = () => {
                 />
               </div>
 
+              <div className="mb-5">
+                <select
+                  placeholder="Enter Your City"
+                  name="city"
+                  onChange={handleInputChange}
+                  className="w-full pr-4 py-3 border-b border-solid 
+              border-[#4CCD99] focus:outline-none 
+              focus:border-b-primaryColor text-[16px] 
+              leading-7 text-headingColor 
+              placeholder:text-textColor  cursor-pointer "
+                  required
+                >
+                    <option value="shiraz">shiraz</option>
+                    <option selected value="tehran">tehran</option>
+                </select>
+              </div>
+
               <div className="mb-5 flex items-center justify-between">
                 <label className="text-headingColor font-bold text-[16px] leading-7">
                   Are You a:
@@ -122,7 +140,7 @@ const Signup = () => {
                     className="text-textColor font-semibold text-[15px] 
                     leading-7 px-4 py-3 focus:outline-none"
                   >
-                    <option value="regular">Patient</option>
+                    <option value="regular">charity representative</option>
                     <option value="doctor">Doctor</option>
                   </select>
                 </label>

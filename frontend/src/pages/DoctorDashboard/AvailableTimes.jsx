@@ -7,7 +7,7 @@ const AvailableTimes = () => {
   const { token } = useAuth()
 
   const getTimes = useQuery(
-    ['times'], 
+    ['available-times'], 
     () => {
       return fetch('http://127.0.0.1:8000/main/api/doctors/times/available/', {
         headers: {
@@ -29,7 +29,7 @@ const AvailableTimes = () => {
             Available <span className="text-primaryColor">Times</span>
             </h3>
             {getTimes?.data && getTimes?.data?.length ? getTimes?.data?.map(time => (
-              <TimeCard key={time?.id} time={time} />
+              <TimeCard key={time?.id} time={time} refetch={getTimes.refetch} />
             )) : null}
           </div>
         </div>

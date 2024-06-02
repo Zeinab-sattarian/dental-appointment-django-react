@@ -6,7 +6,7 @@ import doctorImg from "../../assets/images/dentist-avatar.png";
 const DoctorCard = ({ doctor }) => {
   const {
     id,
-    name,
+    user,
     major,
     specialization,
   } = doctor;
@@ -21,7 +21,7 @@ const DoctorCard = ({ doctor }) => {
         className="text-[18px] leading-[30px] lg:text-[26px] lg:leading-9 
       text-headingColor font-[700] mt-3 lg:mt-5"
       >
-        {name}
+        {user.name}
       </h2>
 
       <div className="mt-2 lg:mt-4 flex items-center justify-between">
@@ -30,6 +30,13 @@ const DoctorCard = ({ doctor }) => {
         lg:text-[16px] lg:leading-7 font-semibold rounded"
         >
           {specialization}
+        </span>
+
+        <span
+          className="bg-[#ccccf3] text-white py-1 px-2 l:py-2 lg:px-6 text-[12px] leading-4 
+        lg:text-[16px] lg:leading-7 font-semibold rounded"
+        >
+          {user.city}
         </span>
       </div>
 

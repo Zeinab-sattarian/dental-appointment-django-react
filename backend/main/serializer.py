@@ -8,13 +8,14 @@ User = get_user_model()
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username', 'password', 'name', 'user_type')
+        fields = ('username', 'password', 'name', 'user_type', 'city')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
         user = User.objects.create_user(
             username=validated_data['username'],
             name=validated_data['name'],
+            city=validated_data['city'],
             user_type=validated_data['user_type'],
             password=validated_data['password']
         )
@@ -45,9 +46,10 @@ class CreateReviewSerializer(serializers.ModelSerializer):
     
 
 class DoctorSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
     class Meta:
-        model = User
-        fields = ['id', 'username', 'name', 'user_type']
+        model = DoctorProfile
+        fields = ['id', 'user', 'about', 'experience', 'major']
         # You might want to customize the fields based on what details about the doctor you want to expose.
 
 class DoctorDetailSerializer(serializers.ModelSerializer):
@@ -61,7 +63,7 @@ class DoctorDetailSerializer(serializers.ModelSerializer):
 class TimeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Time
-        fields = ['id', 'doctor', 'dateTime', 'available', 'hour', 'user', 'phone_number']
+        fields = ['id', 'doctor', 'dateTime', 'available', 'hour', 'user', 'phone_number', 'approved']
 
 
 class ObtainTokenSerializer(serializers.Serializer):

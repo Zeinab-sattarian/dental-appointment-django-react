@@ -16,7 +16,7 @@ const CreateTime = () => {
   };
 
   const mutateTime = useMutation(
-    ['time'],
+    ['create-time'],
     (newTime) => {
       return fetch('http://127.0.0.1:8000/main/api/times/create/', {
         method: 'POST',
