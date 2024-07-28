@@ -42,7 +42,7 @@ const DoctorCard = ({ doctor }) => {
 
       <div className="mt-[18px] w-full h-fit lg:mt-5 flex items-center justify-between">
         <h1 className="font-bold text-lg">{major}</h1>
-        <Link to={`/doctors/${id}`}>
+        <Link to={`/doctors/${user?.id}`}>
           <div className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] flex items-center justify-center hover:bg-primaryColor hover:border-none ">
             <BsArrowRight />
           </div>

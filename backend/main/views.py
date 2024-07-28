@@ -31,7 +31,7 @@ class SignupAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class ObtainTokenView(views.APIView):
+class ObtainTokenView(views.APIView): #login Logic
     permission_classes = [permissions.AllowAny]
     serializer_class = ObtainTokenSerializer
 
@@ -244,6 +244,6 @@ class UpdateDoctorProfileAPIView(views.APIView):
             profile.major=major
             profile.experience=experience
             profile.save()
-            return Response({'message': 'successfully updated'})
+            return Response({'message': 'suc cessfully updated'})
         else:
             raise ValidationError('You Are A a Doctor')
